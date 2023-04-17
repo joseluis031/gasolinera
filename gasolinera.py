@@ -118,3 +118,23 @@ def cola_personas():
             print ("No hay personas en la cola de la caja")
             mutex2.release()
             time.sleep(1)
+            
+            
+def main():
+    
+    #creamos los hilos
+    hilo_repostar = threading.Thread(target=repostar)
+    hilo_pagar = threading.Thread(target=pagar)
+
+    hilo_repostar.start()
+    hilo_pagar.start()
+    
+    while True:
+        
+        hilo_cola_vehiculos = threading.Thread(target=cola_vehiculos)
+        hilo_cola_personas = threading.Thread(target=cola_personas)
+
+        hilo_cola_vehiculos.start()
+        hilo_cola_personas.start()
+        
+        time.sleep(10)
