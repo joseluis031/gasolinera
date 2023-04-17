@@ -5,8 +5,9 @@ import random
 #variables
 gasolinera = 0
 coches = 50
-tiempo = 15
+tiempo = 15 #a ver como lo incluyo al final
 lista_coches = 0
+caja = 0
 
 #semáforos
 surtidor = threading.Semaphore(1) #solo un coche puede usar el surtidor a la vez(pq solo hay 1 surtidor)
@@ -69,3 +70,21 @@ def cola_vehiculos():
             print ("No hay coches en la cola")
             mutex.release()
             time.sleep(1)
+            
+def pagar(): #puede ser que sea mejor meterlo todo en una funcion, y que la funcion sea la q realice todo
+    
+    global caja
+    global lista_coches
+    
+    while True:
+        caja.acquire()
+        caja_disponible.release()
+        caja = 1
+        print ("Pagando la persona del coche {}".format(lista_coches))
+        time.sleep(1)
+
+        print ("Pagado la persona del coche {}".format(lista_coches))
+        pagado.release()
+        lista_coches -= 1
+        caja = 0
+        print("El coche {} se va de la gasolinera".format(lista_coches))
