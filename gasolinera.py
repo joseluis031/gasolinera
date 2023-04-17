@@ -88,3 +88,33 @@ def pagar(): #puede ser que sea mejor meterlo todo en una funcion, y que la func
         lista_coches -= 1
         caja = 0
         print("El coche {} se va de la gasolinera".format(lista_coches))
+        
+def cola_personas():
+    
+    
+    global lista_coches
+    global caja
+    
+    while True:
+        mutex2.acquire()
+        if lista_coches > 0:
+            lista_coches += 1
+            print ("Persona del coche {} llega a la caja".format(lista_coches))
+
+            caja.release()
+            mutex2.release()
+            caja_disponible.acquire()
+
+            print ("Persona del coche {} esta pagando".format(lista_coches))
+
+            pagado.acquire()
+            mutex2.acquire()
+            lista_coches -= 1
+            print("Persona del coche {} ha terminado de pagar".format(lista_coches))
+            mutex2.release()
+            
+            
+        else:
+            print ("No hay personas en la cola de la caja")
+            mutex2.release()
+            time.sleep(1)
