@@ -32,10 +32,10 @@ def repostar(): #falta añadir tipos combustible y tiempos de repostaje y pago
         surtidor.acquire()
         disponible.release()
         gasolinera = 1
-        print ("Repostando el coche {}".format(coches))
+        print ("\nRepostando el coche {}".format(coches))
         time.sleep(1)
 
-        print ("Repostado el coche {}".format(coches))
+        print ("\nRepostado el coche {}".format(coches))
         acabado.release()
         coches -= 1
         gasolinera = 0
@@ -51,23 +51,23 @@ def cola_vehiculos():
         mutex.acquire()
         if coches > 0:
             lista_coches += 1
-            print ("Coche {} llega al surtidor".format(lista_coches))
+            print ("\nCoche {} llega al surtidor".format(lista_coches))
 
             surtidor.release()
             mutex.release()
             disponible.acquire()
 
-            print ("Coche {} esta depositando".format(lista_coches))
+            print ("\nCoche {} esta depositando".format(lista_coches))
 
             acabado.acquire()
             mutex.acquire()
             coches -= 1
-            print("Coche {} ha terminado de repostar".format(lista_coches))
+            print("\nCoche {} ha terminado de repostar".format(lista_coches))
             mutex.release()
             
             
         else:
-            print ("No hay coches en la cola")
+            print ("\nNo hay coches en la cola")
             mutex.release()
             time.sleep(1)
             
@@ -80,14 +80,14 @@ def pagar(): #puede ser que sea mejor meterlo todo en una funcion, y que la func
         caja.acquire()
         caja_disponible.release()
         caja = 1
-        print ("Pagando la persona del coche {}".format(lista_coches))
+        print ("\nPagando la persona del coche {}".format(lista_coches))
         time.sleep(1)
 
-        print ("Pagado la persona del coche {}".format(lista_coches))
+        print ("\nPagado la persona del coche {}".format(lista_coches))
         pagado.release()
         lista_coches -= 1
         caja = 0
-        print("El coche {} se va de la gasolinera".format(lista_coches))
+        print("\nEl coche {} se va de la gasolinera".format(lista_coches))
         
 def cola_personas():
     
@@ -99,23 +99,23 @@ def cola_personas():
         mutex2.acquire()
         if lista_coches > 0:
             lista_coches += 1
-            print ("Persona del coche {} llega a la caja".format(lista_coches))
+            print ("\nPersona del coche {} llega a la caja".format(lista_coches))
 
             caja.release()
             mutex2.release()
             caja_disponible.acquire()
 
-            print ("Persona del coche {} esta pagando".format(lista_coches))
+            print ("\nPersona del coche {} esta pagando".format(lista_coches))
 
             pagado.acquire()
             mutex2.acquire()
             lista_coches -= 1
-            print("Persona del coche {} ha terminado de pagar".format(lista_coches))
+            print("\nPersona del coche {} ha terminado de pagar".format(lista_coches))
             mutex2.release()
             
             
         else:
-            print ("No hay personas en la cola de la caja")
+            print ("\nNo hay personas en la cola de la caja")
             mutex2.release()
             time.sleep(1)
             
@@ -138,3 +138,5 @@ def main():
         hilo_cola_personas.start()
         
         time.sleep(10)
+        
+#no se me inicia el hilo de la caja, tengo que pensar el por que
