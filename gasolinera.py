@@ -32,10 +32,10 @@ def repostar(): #falta añadir tipos combustible y tiempos de repostaje y pago
         surtidor.acquire()
         disponible.release()
         gasolinera = 1
-        print ("\nRepostando el coche {}".format(coches))
+        print ("\nRepostando el coche {}".format(lista_coches))
         time.sleep(1)
 
-        print ("\nRepostado el coche {}".format(coches))
+        print ("\nRepostado el coche {}".format(lista_coches))
         acabado.release()
         coches -= 1
         gasolinera = 0
